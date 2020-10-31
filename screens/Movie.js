@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Button } from "react-native";
 
-const Home = ({ navigation }) => {
+const Movie = ({ navigation }) => {
   return (
     <View>
       <Text>Home</Text>
@@ -13,4 +13,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default Movie;

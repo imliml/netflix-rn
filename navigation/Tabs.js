@@ -1,8 +1,8 @@
 import React, { useLayoutEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import Movie from "../screens/Movie";
-import Tv from "../screens/Tv";
+import Movie from "../screens/Movie/MovieContainer";
+import Tv from "../screens/Tv/TvContainer";
 import Search from "../screens/Search";
 import Favs from "../screens/Favs";
 import { Platform } from "react-native";

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { StyleSheet, Text, Image, View } from "react-native";
+import { Image } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import { Asset } from "expo-asset";
 import { Ionicons } from "@expo/vector-icons";
+import Stack from "./navigation/Stack";
 
 // 이미지 불러오기
 const cacheImages = (images) =>
@@ -32,7 +34,9 @@ const App = () => {
 
   const onFinish = () => setIsReady(true);
   return isReady ? (
-    <Text>Ready!</Text>
+    <NavigationContainer>
+      <Stack />
+    </NavigationContainer>
   ) : (
     <AppLoading
       startAsync={loadAssets}

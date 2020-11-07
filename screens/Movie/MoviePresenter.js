@@ -17,11 +17,13 @@ const Header = styled.View`
   height: ${height / 3}px;
 `;
 const Section = styled.View`
-  background-color: red;
+  background-color: black;
   height: 100%;
 `;
 
-const Text = styled.Text``;
+const Text = styled.Text`
+  color: white;
+`;
 
 const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
   <Container>
@@ -30,7 +32,12 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
     ) : (
       <Header>
         <Swiper controlsEnabled={false} loop timeout={3}>
-          <Section>
+          {nowPlaying.map((movie) => (
+            <Section key={movie.id}>
+              <Text>{movie.title}</Text>
+            </Section>
+          ))}
+          {/* <Section>
             <Text>Hello1</Text>
           </Section>
           <Section>
@@ -38,7 +45,7 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
           </Section>
           <Section>
             <Text>Hello3</Text>
-          </Section>
+          </Section> */}
         </Swiper>
       </Header>
     )}

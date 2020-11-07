@@ -33,6 +33,7 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
               backgroundImage={movie.backdrop_path}
               votes={movie.vote_average}
               overview={movie.overview}
+              poster={movie.poster_path}
             />
           ))}
         </Swiper>

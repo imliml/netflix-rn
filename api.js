@@ -40,3 +40,6 @@ export const tvApi = {
   search: (query) => getAnything("/tv/tv", { query }),
   similar: (id) => getAnything(`/tv/${id}/similar`),
 };
+
+// 이미지 불러오기
+export const apiImage = (path) => `https://image.tmdb.org/t/p/w500${path}`;

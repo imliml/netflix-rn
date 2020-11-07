@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { apiImage } from "../api";
 import Poster from "./Poster";
 import Votes from "./Votes";
+import { trimText } from "../utils";
 
 const Container = styled.View`
   align-items: center;
@@ -16,17 +16,18 @@ const Title = styled.Text`
   margin: 10px 0px 5px 0px;
 `;
 
-const Vertical = ({ poster, title, votes }) => {
+const Vertical = ({ id, poster, title, votes }) => {
   return (
     <Container>
-      <Poster url={apiImage(poster)} />
-      <Title>{title.length > 10 ? `${title.slice(0, 10)}...` : title}</Title>
+      <Poster url={poster} />
+      <Title>{trimText(title, 10)}</Title>
       <Votes votes={votes} />
     </Container>
   );
 };
 
 Vertical.propTypes = {
+  id: PropTypes.number.isRequired,
   poster: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   votes: PropTypes.number.isRequired,

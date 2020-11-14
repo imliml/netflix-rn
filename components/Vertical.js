@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Poster from "./Poster";
 import Votes from "./Votes";
 import { trimText } from "../utils";
+import { TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`
   align-items: center;
@@ -17,12 +19,22 @@ const Title = styled.Text`
 `;
 
 const Vertical = ({ id, poster, title, votes }) => {
+  const navigation = useNavigation();
+  const goToDetail = () => {
+    navigation.navigate("Detail", {
+      id,
+      title,
+      votes,
+    });
+  };
   return (
-    <Container>
-      <Poster url={poster} />
-      <Title>{trimText(title, 10)}</Title>
-      <Votes votes={votes} />
-    </Container>
+    <TouchableOpacity onPress={goToDetail}>
+      <Container>
+        <Poster url={poster} />
+        <Title>{trimText(title, 10)}</Title>
+        <Votes votes={votes} />
+      </Container>
+    </TouchableOpacity>
   );
 };
 

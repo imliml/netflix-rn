@@ -14,35 +14,44 @@ const Container = styled.ScrollView`
 
 const SearchPresenter = ({ movies, shows, keyword, onChange, onSubmit }) => {
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{
+        paddingTop: 10,
+      }}
+    >
       <Input
         placeholder={"Write a keyword"}
         value={keyword}
         onChange={onChange}
         onSubmit={onSubmit}
       />
-      <HorizontalSlider title="Movie Results">
-        {movies.map((movie) => (
-          <Vertical
-            key={movie.id}
-            id={movie.id}
-            poster={movie.poster_path}
-            title={movie.title}
-            votes={movie.vote_average}
-          />
-        ))}
-      </HorizontalSlider>
-      <HorizontalSlider title="Shows Results">
-        {shows.map((item) => (
-          <Vertical
-            key={item.id}
-            id={item.id}
-            poster={item.poster_path}
-            title={item.original_name}
-            votes={item.vote_average}
-          />
-        ))}
-      </HorizontalSlider>
+      {movies && movies.length !== 0 && (
+        <HorizontalSlider title={"Movie Results"}>
+          {movies.map((movie) => (
+            <Vertical
+              key={movie.id}
+              id={movie.id}
+              poster={movie.poster_path || movie.backdrop_path}
+              title={movie.title}
+              votes={movie.vote_average}
+            />
+          ))}
+        </HorizontalSlider>
+      )}
+
+      {shows && shows.length !== 0 && (
+        <HorizontalSlider title={"Show Results"}>
+          {shows.map((show) => (
+            <Vertical
+              key={show.id}
+              id={show.id}
+              poster={show.poster_path || show.backdrop_path}
+              title={show.original_name}
+              votes={show.vote_average}
+            />
+          ))}
+        </HorizontalSlider>
+      )}
     </Container>
   );
 };

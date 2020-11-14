@@ -37,7 +37,7 @@ export const tvApi = {
   topRated: () => getAnything("/tv/top_rated"),
   thisWeek: () => getAnything("/tv/on_the_air"),
   detail: (id) => getAnything(`/tv/${id}`, { append_to_response: "videos" }),
-  search: (query) => getAnything("/tv/tv", { query }),
+  search: (query) => getAnything("/search/tv", { query }),
   similar: (id) => getAnything(`/tv/${id}/similar`),
 };
 

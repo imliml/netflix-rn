@@ -1,10 +1,12 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, ActivityIndicator, TouchableOpacity } from "react-native";
 import ScrollContainer from "../../components/ScrollContainer";
 import styled from "styled-components/native";
 import Votes from "../../components/Votes";
 import { apiImage } from "../../api";
 import Poster from "../../components/Poster";
+import { formatDate } from "../../utils";
+import Link from "../../components/Link";
 
 const BG = styled.Image`
   width: 100%;
@@ -22,7 +24,6 @@ const Header = styled.View`
 const Container = styled.View`
   flex-direction: row;
   align-items: center;
-  top: 30px;
 `;
 
 const Title = styled.Text`
@@ -32,14 +33,16 @@ const Title = styled.Text`
   margin-bottom: 10px;
 `;
 
-const Overview = styled.Text`
+const DataValue = styled.Text`
   color: white;
   opacity: 0.8;
   font-weight: 500;
+  margin-bottom: 15px;
+  margin-top: 5px;
 `;
 
 const Data = styled.View`
-  margin-top: 80px;
+  margin-top: 30px;
   padding: 0px 30px;
 `;
 
@@ -47,7 +50,6 @@ const DataName = styled.Text`
   color: white;
   opacity: 0.8;
   font-weight: 800;
-  margin-bottom: 5px;
 `;
 
 const Info = styled.View`
@@ -55,25 +57,117 @@ const Info = styled.View`
   margin-left: 40px;
 `;
 
-const DetailPresenter = ({ movie }) => {
+const DetailPresenter = ({ result, loading, openBrowser }) => {
   return (
-    <ScrollContainer>
+    <ScrollContainer
+      loading={false}
+      contentContainerStyle={{ paddingBottom: 80 }}
+    >
       <>
         <Header>
-          <BG source={{ uri: apiImage(movie.backgroundImage, "-") }} />
+          <BG source={{ uri: apiImage(result.backgroundImage, "-") }} />
           <Container>
-            <Poster url={movie.poster} />
+            <Poster url={result.poster} />
             <Info>
-              <Title>{movie.title}</Title>
-              {movie.votes && <Votes votes={movie.votes} />}
+              <Title>{result.title}</Title>
+              {result.votes && <Votes votes={result.votes} />}
             </Info>
           </Container>
         </Header>
         <Data>
-          {movie.overview && (
+          {result.overview && (
             <>
               <DataName>Overview</DataName>
-              <Overview>{movie.overview}</Overview>
+              <DataValue>{result.overview}</DataValue>
+            </>
+          )}
+          {loading && (
+            <ActivityIndicator style={{ marginTop: 30 }} color={"white"} />
+          )}
+          {result.spoken_languages && (
+            <>
+              <DataName>Languages</DataName>
+              <DataValue>
+                {result.spoken_languages.map((item) => `${item.name} `)}
+              </DataValue>
+            </>
+          )}
+          {result.release_date ? (
+            <>
+              <DataName>Release Date</DataName>
+              <DataValue>{formatDate(result.release_date)}</DataValue>
+            </>
+          ) : (
+            <>
+              <DataName>First Air Date</DataName>
+              <DataValue>{formatDate(result.first_air_date)}</DataValue>
+            </>
+          )}
+          {result.imdb_id && (
+            <Link
+              text={"IMDB Page"}
+              icon={"imdb"}
+              onPress={() =>
+                openBrowser(`https://www.imdb.com/title/${result.imdb_id}`)
+              }
+            />
+          )}
+          {result.videos.results?.length > 0 && (
+            <>
+              <DataName>Videos</DataName>
+              {result.videos.results.map((video) => (
+                <Link
+                  text={video.name}
+                  key={video.key}
+                  icon="youtube-play"
+                  onPress={() =>
+                    openBrowser(`https://www.youtube.com/watch?v=${video.key}`)
+                  }
+                />
+              ))}
+            </>
+          )}
+          {result.status && (
+            <>
+              <DataName>Status</DataName>
+              <DataValue>{result.status}</DataValue>
+            </>
+          )}
+          {result.runtime ? (
+            <>
+              <DataName>Run Time</DataName>
+              {result.runtime ? (
+                <DataValue>{result.runtime}분</DataValue>
+              ) : (
+                <DataValue>정보가 없습니다.</DataValue>
+              )}
+            </>
+          ) : (
+            <>
+              <DataName>Episode Run Time</DataName>
+              {result.episode_run_time ? (
+                <DataValue>{result.episode_run_time[0]}분</DataValue>
+              ) : (
+                <DataValue>정보가 없습니다.</DataValue>
+              )}
+            </>
+          )}
+          {result.genres && (
+            <>
+              <DataName>genres</DataName>
+              <DataValue>
+                {result.genres.map((genre, index) =>
+                  index === result.genres.length - 1
+                    ? genre.name
+                    : `${genre.name} / `
+                )}
+              </DataValue>
+            </>
+          )}
+          {result.number_of_episodes && (
+            <>
+              <DataName>Number of episodes</DataName>
+              <DataValue>{result.number_of_episodes}편</DataValue>
             </>
           )}
         </Data>

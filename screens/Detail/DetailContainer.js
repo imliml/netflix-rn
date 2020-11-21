@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import DetailPresenter from "./DetailPresenter";
 import { View, Text } from "react-native";
 import { movieApi, tvApi } from "../../api";
+import * as WebBrowser from "expo-web-browser";
 
 const DetailContainer = ({
   navigation,
@@ -13,44 +14,47 @@ const DetailContainer = ({
     navigation.setOptions({ title });
   });
 
-  console.log(isTv);
-
-  const [movie, setMovie] = useState({
-    title,
-    votes,
-    backgroundImage,
-    poster,
-    overview,
+  const [detail, setDetail] = useState({
+    loading: true,
+    result: {
+      title,
+      votes,
+      backgroundImage,
+      poster,
+      overview,
+      videos: {
+        results: [],
+      },
+    },
   });
 
   const getData = async () => {
-    // if (isTv) {
-    //   const [getMovie, getMovieError] = await tvApi.detail(id);
-    // } else {
-    //   const [getMovie, getMovieError] = await movieApi.detail(id);
-    // }
-
-    const [getMovie, getMovieError] = isTv
+    const [getDetail, getDetailError] = isTv
       ? await tvApi.detail(id)
       : await movieApi.detail(id);
 
-    setMovie({
-      ...getMovie,
-      title: getMovie.title,
-      votes: getMovie.vote_average,
-      backgroundImage: getMovie.backdrop_path,
-      poster: getMovie.poster_path,
-      overview: getMovie.overview,
+    setDetail({
+      loading: false,
+      result: {
+        ...getDetail,
+        title: getDetail.title || getDetail.name,
+        votes: getDetail.vote_average,
+        backgroundImage: getDetail.backdrop_path,
+        poster: getDetail.poster_path,
+        overview: getDetail.overview,
+      },
     });
-
-    setResult(results);
   };
 
   useEffect(() => {
     getData();
   }, [id]);
 
-  return <DetailPresenter movie={movie} />;
+  const openBrowser = async (url) => {
+    await WebBrowser.openBrowserAsync(url);
+  };
+
+  return <DetailPresenter openBrowser={openBrowser} {...detail} />;
 };
 
 export default DetailContainer;

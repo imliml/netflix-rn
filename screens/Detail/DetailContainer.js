@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import DetailPresenter from "./DetailPresenter";
 import { View, Text } from "react-native";
 import { movieApi, tvApi } from "../../api";
@@ -6,16 +6,40 @@ import { movieApi, tvApi } from "../../api";
 const DetailContainer = ({
   navigation,
   route: {
-    params: { id, title },
+    params: { id, title, votes, backgroundImage, poster, overview },
   },
 }) => {
-  navigation.setOptions({ title });
+  useLayoutEffect(() => {
+    navigation.setOptions({ title });
+  });
+
+  const [movie, setMovie] = useState({
+    title,
+    votes,
+    backgroundImage,
+    poster,
+    overview,
+  });
 
   const getData = async () => {
-    const results = await movieApi.detail(id);
+    const [getMovie, getMovieError] = await movieApi.detail(id);
+    setMovie({
+      ...getMovie,
+      title: getMovie.title,
+      votes: getMovie.vote_average,
+      backgroundImage: getMovie.backdrop_path,
+      poster: getMovie.poster_path,
+      overview: getMovie.overview,
+    });
+
+    setResult(results);
   };
 
-  return <DetailPresenter title={title} votes={4.5} />;
+  useEffect(() => {
+    getData();
+  }, [id]);
+
+  return <DetailPresenter {...movie} />;
 };
 
 export default DetailContainer;

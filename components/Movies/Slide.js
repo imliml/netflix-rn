@@ -60,13 +60,22 @@ const ButtonText = styled.Text`
   color: white;
 `;
 
-const Slide = ({ id, title, backgroundImage, votes, overview, poster }) => {
+const Slide = ({
+  id,
+  title,
+  backgroundImage,
+  votes,
+  overview,
+  poster,
+  isTv = false,
+}) => {
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("Detail", {
       id,
       title,
       votes,
+      isTv,
     });
   };
 
@@ -99,6 +108,7 @@ Slide.propTypes = {
   votes: PropTypes.number,
   overview: PropTypes.string.isRequired,
   poster: PropTypes.string,
+  isTv: PropTypes.bool.isRequired,
 };
 
 export default Slide;

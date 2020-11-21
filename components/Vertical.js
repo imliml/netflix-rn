@@ -18,10 +18,11 @@ const Title = styled.Text`
   margin: 10px 0px 5px 0px;
 `;
 
-const Vertical = ({ id, poster, title, votes }) => {
+const Vertical = ({ id, poster, title, votes, isTv = false }) => {
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("Detail", {
+      isTv,
       id,
       title,
       votes,
@@ -43,6 +44,7 @@ Vertical.propTypes = {
   poster: PropTypes.string,
   title: PropTypes.string.isRequired,
   votes: PropTypes.number.isRequired,
+  isTv: PropTypes.bool,
 };
 
 export default Vertical;

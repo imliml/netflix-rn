@@ -6,12 +6,14 @@ import { movieApi, tvApi } from "../../api";
 const DetailContainer = ({
   navigation,
   route: {
-    params: { id, title, votes, backgroundImage, poster, overview },
+    params: { id, isTv, title, votes, backgroundImage, poster, overview },
   },
 }) => {
   useLayoutEffect(() => {
     navigation.setOptions({ title });
   });
+
+  console.log(isTv);
 
   const [movie, setMovie] = useState({
     title,
@@ -22,7 +24,16 @@ const DetailContainer = ({
   });
 
   const getData = async () => {
-    const [getMovie, getMovieError] = await movieApi.detail(id);
+    // if (isTv) {
+    //   const [getMovie, getMovieError] = await tvApi.detail(id);
+    // } else {
+    //   const [getMovie, getMovieError] = await movieApi.detail(id);
+    // }
+
+    const [getMovie, getMovieError] = isTv
+      ? await tvApi.detail(id)
+      : await movieApi.detail(id);
+
     setMovie({
       ...getMovie,
       title: getMovie.title,
@@ -39,7 +50,7 @@ const DetailContainer = ({
     getData();
   }, [id]);
 
-  return <DetailPresenter {...movie} />;
+  return <DetailPresenter movie={movie} />;
 };
 
 export default DetailContainer;

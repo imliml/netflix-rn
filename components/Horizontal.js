@@ -36,13 +36,22 @@ const Overview = styled.Text`
   color: white;
 `;
 
-const Horizontal = ({ id, title, votes, poster, overview, releaseDate }) => {
+const Horizontal = ({
+  id,
+  title,
+  votes,
+  poster,
+  overview,
+  releaseDate,
+  isTv = false,
+}) => {
   const navigation = useNavigation();
   const goToDetail = () => {
     navigation.navigate("Detail", {
       id,
       title,
       votes,
+      isTv,
     });
   };
   return (
@@ -69,6 +78,7 @@ Horizontal.propTypes = {
   poster: PropTypes.string.isRequired,
   overview: PropTypes.string.isRequired,
   releaseDate: PropTypes.string.isRequired,
+  isTv: PropTypes.bool,
 };
 
 export default Horizontal;

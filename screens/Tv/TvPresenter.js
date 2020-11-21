@@ -47,6 +47,7 @@ const TvPresenter = ({
                   poster={item.poster_path}
                   title={item.original_name}
                   votes={item.vote_average}
+                  isTv={true}
                 />
               ))}
             </ScrollView>
@@ -64,6 +65,7 @@ const TvPresenter = ({
                   poster={item.poster_path}
                   title={item.original_name}
                   votes={item.vote_average}
+                  isTv={true}
                 />
               ))}
             </ScrollView>
@@ -81,6 +83,7 @@ const TvPresenter = ({
                   poster={item.poster_path}
                   title={item.original_name}
                   votes={item.vote_average}
+                  isTv={true}
                 />
               ))}
             </ScrollView>
@@ -95,6 +98,7 @@ const TvPresenter = ({
                   poster={item.poster_path}
                   overview={item.overview}
                   releaseDate={item.first_air_date}
+                  isTv={true}
                 />
               ))}
             </PopularContainer>

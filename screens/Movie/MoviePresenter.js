@@ -45,6 +45,7 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
                 votes={movie.vote_average}
                 overview={movie.overview}
                 poster={movie.poster_path}
+                isTv={false}
               />
             ))}
           </Swiper>
@@ -64,6 +65,7 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
                 poster={movie.poster_path}
                 title={movie.title}
                 votes={movie.vote_average}
+                isTv={false}
               />
             ))}
           </ScrollView>
@@ -78,6 +80,7 @@ const MoviePresenter = ({ nowPlaying, popular, upcoming, loading, error }) => (
                 poster={movie.poster_path}
                 overview={movie.overview}
                 releaseDate={movie.release_date}
+                isTv={false}
               />
             ))}
           </UpcomingContainer>

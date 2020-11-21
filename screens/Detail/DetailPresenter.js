@@ -55,31 +55,25 @@ const Info = styled.View`
   margin-left: 40px;
 `;
 
-const DetailPresenter = ({
-  backgroundImage,
-  title,
-  votes,
-  overview,
-  poster,
-}) => {
+const DetailPresenter = ({ movie }) => {
   return (
     <ScrollContainer>
       <>
         <Header>
-          <BG source={{ uri: apiImage(backgroundImage, "-") }} />
+          <BG source={{ uri: apiImage(movie.backgroundImage, "-") }} />
           <Container>
-            <Poster url={poster} />
+            <Poster url={movie.poster} />
             <Info>
-              <Title>{title}</Title>
-              {votes && <Votes votes={votes} />}
+              <Title>{movie.title}</Title>
+              {movie.votes && <Votes votes={movie.votes} />}
             </Info>
           </Container>
         </Header>
         <Data>
-          {overview && (
+          {movie.overview && (
             <>
               <DataName>Overview</DataName>
-              <Overview>{overview}</Overview>
+              <Overview>{movie.overview}</Overview>
             </>
           )}
         </Data>
